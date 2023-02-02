@@ -16,55 +16,55 @@ public class Main
     public static List<Material> materialList = new ArrayList<>();
     public static MaterialManager materialManager = new MaterialManager(materialList);
 
+
+    public static Material materialInput(String type)
+    {
+        Scanner input = new Scanner(System.in);
+        System.out.print("ID = ");
+        String id = input.next();
+        input = new Scanner(System.in);
+        System.out.print("Name = ");
+        String name = input.nextLine();
+        System.out.print("Cost = ");
+        int cost = Integer.parseInt(input.nextLine());
+        System.out.print("Manufacturing Date = ");
+        String manufacturingDate = input.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDate = LocalDate.parse(manufacturingDate, formatter);
+        Material material = null;
+        switch (type)
+        {
+            case "1":
+                System.out.print("Weight = ");
+                double weight = Double.parseDouble(input.nextLine());
+                material = new Meat(id, name, localDate, cost, weight);
+                break;
+            case "2":
+                System.out.print("Quantity = ");
+                int quantity = Integer.parseInt(input.nextLine());
+                material = new CrispyFlour(id, name, localDate, cost, quantity);
+                break;
+        }
+        return material;
+
+    }
+
     public static Material createMaterial()
     {
         Scanner input = new Scanner(System.in);
         boolean result = false;
-        String id, name,manufacturingDate;
-        int cost;
-        LocalDate localDate;
         Material material = null;
         do
         {
             System.out.println("Mời bạn lựa chọn");;
             System.out.println("1. Meat");
             System.out.println("2. Crispy Flour");
-
             System.out.print("Type = ");
             String type = input.next();
             switch (type)
             {
-                case "1":
-                    System.out.print("ID = ");
-                    id = input.next();
-                    input = new Scanner(System.in);
-                    System.out.print("Name = ");
-                    name = input.nextLine();
-                    System.out.print("Cost = ");
-                    cost = Integer.parseInt(input.nextLine());
-                    System.out.print("Weight = ");
-                    double weight = Double.parseDouble(input.nextLine());
-                    System.out.print("Manufacturing Date = ");
-                    manufacturingDate = input.nextLine();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                    localDate = LocalDate.parse(manufacturingDate, formatter);
-                    material = new Meat(id, name, localDate, cost, weight);
-                    result = true;
-                    break;
-                case "2":
-                    System.out.print("ID = ");
-                    id = input.next();
-                    input = new Scanner(System.in);
-                    System.out.print("Name = ");
-                    name = input.nextLine();
-                    System.out.print("Cost = ");
-                    cost = Integer.parseInt(input.nextLine());
-                    System.out.print("Quantity = ");
-                    int quantity = Integer.parseInt(input.nextLine());
-                    System.out.print("Manufacturing Date = ");
-                    manufacturingDate = input.nextLine();
-                    localDate = LocalDate.parse(manufacturingDate);
-                    material = new CrispyFlour(id, name, localDate, cost, quantity);
+                case "1","2":
+                    material = materialInput(type);
                     result = true;
                     break;
             }
